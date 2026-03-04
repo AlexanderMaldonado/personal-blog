@@ -1,0 +1,5 @@
+.env
+blog.db
+__pycache__/
+*.pyc
+instance/

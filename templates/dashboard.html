@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — Admin{% endblock %}
+
+{% block content %}
+<div class="page-header" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem">
+  <h1>Dashboard</h1>
+  <a href="{{ url_for('admin.new_article') }}" class="btn btn-primary">+ Nuevo artículo</a>
+</div>
+
+{% if articles %}
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:6px; overflow:hidden">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for art in articles %}
+        <tr>
+          <td>
+            <a href="{{ url_for('public.article', article_id=art.id) }}" target="_blank"
+               style="color:var(--text); text-decoration:none">
+              {{ art.title }}
+            </a>
+          </td>
+          <td style="color:var(--muted); white-space:nowrap">{{ art.date }}</td>
+          <td>
+            <div class="actions">
+              <a href="{{ url_for('admin.edit_article', article_id=art.id) }}"
+                 class="btn btn-outline btn-sm">Editar</a>
+              <form method="POST"
+                    action="{{ url_for('admin.delete_article', article_id=art.id) }}"
+                    onsubmit="return confirm('¿Eliminar este artículo?')">
+                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:.78rem; color:var(--muted); margin-top:1rem">
+    {{ articles|length }} artículo{% if articles|length != 1 %}s{% endif %}
+  </p>
+{% else %}
+  <div class="empty-state">
+    <div class="icon">📝</div>
+    <p>No hay artículos. ¡Crea el primero!</p>
+    <a href="{{ url_for('admin.new_article') }}" class="btn btn-primary" style="margin-top:1.5rem">
+      + Nuevo artículo
+    </a>
+  </div>
+{% endif %}
+{% endblock %}

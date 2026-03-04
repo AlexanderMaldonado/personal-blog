@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Inicio — El Blog{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Artículos</h1>
+</div>
+
+{% if articles %}
+  {% for art in articles %}
+    <div class="card">
+      <div class="meta">{{ art.date }}</div>
+      <h2><a href="{{ url_for('public.article', article_id=art.id) }}">{{ art.title }}</a></h2>
+      <p class="excerpt">
+        {{ art.content[:180] }}{% if art.content|length > 180 %}…{% endif %}
+      </p>
+      <a href="{{ url_for('public.article', article_id=art.id) }}"
+         class="btn btn-outline btn-sm" style="margin-top:1rem">
+        Leer →
+      </a>
+    </div>
+  {% endfor %}
+{% else %}
+  <div class="empty-state">
+    <div class="icon">📭</div>
+    <p>No hay artículos publicados todavía.</p>
+  </div>
+{% endif %}
+{% endblock %}

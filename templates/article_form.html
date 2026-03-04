@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}
+  {% if action == "edit" %}Editar{% else %}Nuevo{% endif %} artículo — Admin
+{% endblock %}
+
+{% block content %}
+<a href="{{ url_for('admin.dashboard') }}" class="btn btn-ghost btn-sm"
+   style="margin-bottom:2rem">← Dashboard</a>
+
+<div class="form-box">
+  <div class="page-header">
+    <h1 style="font-size:1.6rem">
+      {% if action == "edit" %}Editar artículo{% else %}Nuevo artículo{% endif %}
+    </h1>
+  </div>
+
+  <form method="POST"
+        action="{% if action == 'edit' %}{{ url_for('admin.edit_article', article_id=article_id) }}{% else %}{{ url_for('admin.new_article') }}{% endif %}">
+
+    <div class="form-group">
+      <label for="title">Título</label>
+      <input type="text" id="title" name="title" value="{{ title }}" required />
+    </div>
+
+    <div class="form-group">
+      <label for="date">Fecha de publicación</label>
+      <input type="date" id="date" name="date" value="{{ date }}" required />
+    </div>
+
+    <div class="form-group">
+      <label for="content">Contenido</label>
+      <textarea id="content" name="content" required>{{ content }}</textarea>
+    </div>
+
+    <div style="display:flex; gap:1rem; margin-top:1.5rem">
+      <button type="submit" class="btn btn-primary">
+        {% if action == "edit" %}Guardar cambios{% else %}Publicar{% endif %}
+      </button>
+      <a href="{{ url_for('admin.dashboard') }}" class="btn btn-ghost">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
