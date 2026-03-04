@@ -1,4 +1,5 @@
 # Personal Blog
+link: https://roadmap.sh/projects/personal-blog
 
 A personal blog built with Flask and SQLite. Features a public section to read articles and a protected admin panel to manage them.
 
